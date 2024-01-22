@@ -139,13 +139,12 @@ func draw_next_shape():
 		set_cell(NEXT_PIECE_LAYER, i + next_offset, 0, next_piece.sprite)
 
 func draw_shape():
+	clear_layer(ACTIVE_LAYER)
+	for i in active_shape:
+		set_cell(ACTIVE_LAYER, i + offset, 0, active_piece.sprite)
+		
 	if to_be_placed:
 		place_block()
-	else:
-		clear_layer(ACTIVE_LAYER)
-		
-		for i in active_shape:
-			set_cell(ACTIVE_LAYER, i + offset, 0, active_piece.sprite)
 
 func update_offset(x_val, y_val):
 	var new_offset = Vector2i(offset.x + x_val, offset.y + y_val)
@@ -163,6 +162,21 @@ func update_offset(x_val, y_val):
 
 func lower_piece():
 	update_offset(0,1)
+
+func quick_drop():
+	var distance = 20
+	var lowest_y = 0
+	for block in active_shape:
+		lowest_y = max(lowest_y, block.y)
+		for i in range(distance):
+			var block_offset = Vector2i(block.x,block.y+i) + offset
+			var has_block = !is_cell_empty(PLACED_LAYER,block_offset) || !is_cell_empty(BORDER_LAYER,block_offset)
+			if has_block:
+				distance = min(distance,i)
+				break
+	print(distance)
+	to_be_placed = true
+	update_offset(0, distance - 1)
 
 func new_block():
 	to_be_placed = false
@@ -197,6 +211,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if Input.is_action_just_pressed("ui_up"):
+		quick_drop()
+		
 	if (Input.is_action_just_pressed("ui_select")):
 		rotate_shape()
 	
