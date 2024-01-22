@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://i7aunav1ubvm"]
+
+[ext_resource type="PackedScene" uid="uid://ctpwwiaifmbs1" path="res://board.tscn" id="1_lr8vi"]
+[ext_resource type="TileSet" uid="uid://c1fmgic44vrjw" path="res://tetris_pieces.tres" id="1_nor7g"]
+
+[node name="Level" type="Node2D"]
+
+[node name="Legend" type="TileMap" parent="."]
+tile_set = ExtResource("1_nor7g")
+format = 2
+layer_0/tile_data = PackedInt32Array(720899, 196608, 0, 720900, 196608, 0, 917507, 327680, 0, 983044, 327680, 0, 720906, 262144, 0, 655370, 262144, 0, 917513, 393216, 0, 1245188, 0, 0, 655364, 196608, 0, 655365, 196608, 0, 655369, 262144, 0, 720907, 262144, 0, 458755, 65536, 0, 458763, 131072, 0, 917509, 327680, 0, 917508, 327680, 0, 917515, 393216, 0, 917514, 393216, 0, 1179652, 0, 0, 393219, 65536, 0, 393220, 65536, 0, 393221, 65536, 0, 393227, 131072, 0, 393226, 131072, 0, 393225, 131072, 0, 917516, 393216, 0, 1179651, 0, 0, 1245187, 0, 0)
+
+[node name="Board" parent="." instance=ExtResource("1_lr8vi")]
