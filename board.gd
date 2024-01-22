@@ -84,6 +84,7 @@ func rotate_shape():
 		rotations = new_rotations
 		active_shape = new_shape
 		draw_shape()
+		$Sounds/Rotate.play()
 
 func is_cell_empty(layer, vector2location):
 	var rtn = get_cell_atlas_coords(layer, vector2location) == Vector2i(-1,-1)
@@ -98,6 +99,7 @@ func move_cell_down(cell_location: Vector2i):
 	pass
 
 func clear_any_rows():
+	var lines_cleared = []
 	for y in 20: # for every row
 		var block_range = range(-5,5)
 		var clear_this_row = true
@@ -109,15 +111,23 @@ func clear_any_rows():
 				break
 		
 		if clear_this_row:
+			lines_cleared.append(y)
 			block_range.map(func(x): erase_cell(PLACED_LAYER, Vector2i(x,y)))
 			# get all cells above the current y level
 			var all_cells = get_used_cells(PLACED_LAYER)
 			for y2 in range(y-1, -1, -1):
 				all_cells.map(func(v): if v.y == y2: move_cell_down(v))
+	
+	var lc_size = lines_cleared.size()
+	if lc_size > 0 && lc_size < 4:
+		$Sounds/ClearLine.play()
+	elif lc_size > 0:
+		$Sounds/Tetris.play()
 
 func place_block():
 	active_shape.filter(func(i): set_cell(PLACED_LAYER, i+offset, 0, active_piece.sprite))
 	clear_layer(ACTIVE_LAYER)
+	$Sounds/Place.play()
 	clear_any_rows()
 	new_block()
 

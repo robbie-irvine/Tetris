@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://ctpwwiaifmbs1"]
+[gd_scene load_steps=7 format=3 uid="uid://ctpwwiaifmbs1"]
 
 [ext_resource type="TileSet" uid="uid://c1fmgic44vrjw" path="res://tetris_pieces.tres" id="1_j64b4"]
 [ext_resource type="Script" path="res://board.gd" id="2_mq4vm"]
+[ext_resource type="AudioStream" uid="uid://c5efdbr3d7c36" path="res://sfx/rotate.wav" id="3_k1o8k"]
+[ext_resource type="AudioStream" uid="uid://dhvw65yeih4r5" path="res://sfx/line.wav" id="4_5ebjc"]
+[ext_resource type="AudioStream" uid="uid://cnim2vercn212" path="res://sfx/place.wav" id="5_bpo37"]
+[ext_resource type="AudioStream" uid="uid://der6hd42d8n3v" path="res://sfx/tetris.wav" id="6_7wv83"]
 
 [node name="Board" type="TileMap"]
 texture_filter = 1
@@ -23,5 +27,19 @@ script = ExtResource("2_mq4vm")
 [node name="Timer" type="Timer" parent="."]
 process_callback = 0
 autostart = true
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Rotate" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("3_k1o8k")
+
+[node name="ClearLine" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("4_5ebjc")
+
+[node name="Place" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("5_bpo37")
+
+[node name="Tetris" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("6_7wv83")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
