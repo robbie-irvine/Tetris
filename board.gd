@@ -49,6 +49,7 @@ const BORDER_LAYER = 0
 const ACTIVE_LAYER = 1
 const PLACED_LAYER = 2
 const NEXT_PIECE_LAYER = 3
+const GHOST_LAYER = 5
 
 var offset = Vector2i(0,0)
 var active_piece
@@ -138,13 +139,21 @@ func draw_next_shape():
 	for i in next_piece.shape:
 		set_cell(NEXT_PIECE_LAYER, i + next_offset, 0, next_piece.sprite)
 
+func draw_ghost():
+	clear_layer(GHOST_LAYER)
+	var distance = Vector2i(0,find_lowest_space()-1)
+	active_shape.map(func(block): set_cell(GHOST_LAYER, block+offset+distance, 0, Vector2i(8,0)))
+
 func draw_shape():
 	clear_layer(ACTIVE_LAYER)
+	clear_layer(GHOST_LAYER)
 	for i in active_shape:
 		set_cell(ACTIVE_LAYER, i + offset, 0, active_piece.sprite)
 		
 	if to_be_placed:
 		place_block()
+	else:
+		draw_ghost()
 
 func update_offset(x_val, y_val):
 	var new_offset = Vector2i(offset.x + x_val, offset.y + y_val)
@@ -163,7 +172,7 @@ func update_offset(x_val, y_val):
 func lower_piece():
 	update_offset(0,1)
 
-func quick_drop():
+func find_lowest_space():
 	var distance = 20
 	var lowest_y = 0
 	for block in active_shape:
@@ -174,6 +183,10 @@ func quick_drop():
 			if has_block:
 				distance = min(distance,i)
 				break
+	return distance
+
+func quick_drop():
+	var distance = find_lowest_space()
 	print(distance)
 	to_be_placed = true
 	update_offset(0, distance - 1)

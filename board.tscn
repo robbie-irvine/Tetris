@@ -25,6 +25,9 @@ layer_3/tile_data = PackedInt32Array()
 layer_4/name = "border_top"
 layer_4/z_index = 2
 layer_4/tile_data = PackedInt32Array(-65532, 458752, 0, -65533, 458752, 0, -65534, 458752, 0, -65535, 458752, 0, -65536, 458752, 0, -1, 458752, 0, -2, 458752, 0, -3, 458752, 0, -4, 458752, 0, -5, 458752, 0)
+layer_5/name = "ghost_piece"
+layer_5/z_index = -1
+layer_5/tile_data = PackedInt32Array()
 script = ExtResource("2_mq4vm")
 
 [node name="Timer" type="Timer" parent="."]
