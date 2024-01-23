@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Tetris"
-config/version="0.1"
+config/version="0.2"
 run/main_scene="res://level.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.png"
